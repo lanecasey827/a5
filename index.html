@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Top 10 Longest Rivers! 🌊</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50; /* Green for nature */
+            --secondary-color: #2196F3; /* Blue for water */
+            --accent-color: #FFC107; /* Yellow for highlights */
+            --text-dark: #333;
+            --text-light: #f4f4f4;
+            --bg-light: #e0f7fa; /* Light cyan */
+            --bg-dark: #004d40; /* Dark teal */
+            --card-bg: #ffffff;
+            --border-radius: 15px;
+            --shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+            --hover-shadow: rgba(0, 0, 0, 0.25) 0px 8px 25px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--bg-light), var(--secondary-color));
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 2em 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        header::before {
+            content: '💧🌊💦';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 8em;
+            opacity: 0.1;
+            transform: translateY(-50%) rotate(5deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5em;
+            margin-bottom: 0.2em;
+            text-shadow: 3px 3px var(--bg-dark);
+            position: relative;
+            z-index: 1;
+            animation: bounceIn 1s ease-out;
+        }
+
+        p.subtitle {
+            font-size: 1.3em;
+            margin-top: 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 0 1em;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+        }
+
+        .river-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5em;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        .river-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .river-card::before {
+            content: '🌊';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 4em;
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .river-card h2 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            margin-top: 0.5em;
+            font-size: 2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .river-card .rank {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            padding: 0.5em 1em;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1em;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: popOut 0.5s ease-out;
+        }
+
+        .river-card .details {
+            margin-top: 1em;
+            font-size: 1.1em;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .river-card .details p {
+            margin: 0.5em 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .river-card .details p strong {
+            margin-right: 0.5em;
+            color: var(--secondary-color);
+        }
+
+        .river-card .emoji-icon {
+            font-size: 1.2em;
+            margin-right: 0.5em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeInModal 0.3s ease-out;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 80%;
+            max-width: 700px;
+            box-shadow: var(--hover-shadow);
+            animation: zoomIn 0.3s ease-out;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .modal-content p {
+            font-size: 1.1em;
+            margin-bottom: 1em;
+            color: var(--text-dark);
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-content p strong {
+            color: var(--secondary-color);
+            margin-right: 0.5em;
+            min-width: 90px;
+        }
+
+        .close-button {
+            color: var(--text-dark);
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--accent-color);
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5em 0;
+            margin-top: 3em;
+            font-size: 0.9em;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px -5px 15px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes popOut {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            p.subtitle {
+                font-size: 1em;
+            }
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .river-card {
+                padding: 1em;
+            }
+            .river-card h2 {
+                font-size: 1.8em;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .modal-content h3 {
+                font-size: 2em;
+            }
+            .close-button {
+                font-size: 2.5em;
+                top: 10px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌍 Top 10 Longest Rivers! 🌊</h1>
+        <p class="subtitle">Dive into the world's most magnificent waterways! 🏞️✨</p>
+    </header>
+
+    <div class="container" id="river-cards-container">
+        <!-- River cards will be injected here by JavaScript -->
+    </div>
+
+    <div id="riverModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modalRiverName"></h3>
+            <p><span class="emoji-icon">📏</span> <strong>Length:</strong> <span id="modalRiverLength"></span></p>
+            <p><span class="emoji-icon">🗺️</span> <strong>Continent:</strong> <span id="modalRiverContinent"></span></p>
+            <p><span class="emoji-icon">🏞️</span> <strong>Countries:</strong> <span id="modalRiverCountries"></span></p>
+            <p><span class="emoji-icon">💡</span> <strong>Interesting Fact:</strong> <span id="modalRiverFact"></span></p>
+            <p><span class="emoji-icon">💧</span> <strong>Source:</strong> <span id="modalRiverSource"></span></p>
+            <p><span class="emoji-icon">🌊</span> <strong>Mouth:</strong> <span id="modalRiverMouth"></span></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with ❤️ for river enthusiasts! | Data may vary slightly by source. 🌐</p>
+    </footer>
+
+    <script>
+        const rivers = [
+            {
+                name: "Nile",
+                lengthKm: "6,650 km",
+                lengthMi: "4,132 mi",
+                continent: "Africa 🌍",
+                countries: "Egypt, Sudan, South Sudan, Ethiopia, Uganda, Congo, Kenya, Tanzania, Rwanda, Burundi, Eritrea 🇪🇬🇸🇩🇺🇬",
+                fact: "Historically considered the longest river, the Nile is crucial for ancient civilizations and modern life. Its basin supports agriculture for millions! 🌾",
+                source: "Lake Victoria 🏞️",
+                mouth: "Mediterranean Sea 🌊",
+                emoji: "🏺"
+            },
+            {
+                name: "Amazon",
+                lengthKm: "6,400 km",
+                lengthMi: "4,000 mi",
+                continent: "South America 🌎",
+                countries: "Brazil, Peru, Bolivia, Colombia, Ecuador, Guyana, Venezuela, Suriname, French Guiana 🇧🇷🇵🇪🇨🇴",
+                fact: "The largest river by discharge volume, carrying more water than the next seven largest rivers combined! Home to incredible biodiversity. 🐒🐍🐠",
+                source: "Nevado Mismi, Andes Mountains ⛰️",
+                mouth: "Atlantic Ocean 🌊",
+                emoji: "🦋"
+            },
+            {
+                name: "Yangtze (Chang Jiang)",
+                lengthKm: "6,300 km",
+                lengthMi: "3,915 mi",
+                continent: "Asia 🌏",
+                countries: "China 🇨🇳",
+                fact: "The longest river entirely within one country, playing a vital role in China's history, culture, and economy. The Three Gorges Dam is built on it! 🐉🍚",
+                source: "Jari Hill, Tanggula Mountains 🏔️",
+                mouth: "East China Sea 🌊",
+                emoji: "🐼"
+            },
+            {
+                name: "Mississippi–Missouri–Jefferson",
+                lengthKm: "6,275 km",
+                lengthMi: "3,902 mi",
+                continent: "North America 🌎",
+                countries: "USA 🇺🇸",
+                fact: "The largest river system in North America, its basin covers 31 U.S. states and 2 Canadian provinces. A historic trade route! 🛶🦅",
+                source: "Lake Itasca (Mississippi), Brower's Spring (Jefferson) 🌲",
+                mouth: "Gulf of Mexico 🌊",
+                emoji: "🤠"
+            },
+            {
+                name: "Yenisei–Angara–Selenga",
+                lengthKm: "5,539 km",
+                lengthMi: "3,442 mi",
+                continent: "Asia 🌏",
+                countries: "Russia, Mongolia 🇷🇺🇲🇳",
+                fact: "The largest river system flowing into the Arctic Ocean, draining a vast area of Siberia. Parts freeze solid in winter! ❄️🐻",
+                source: "Lake Baikal (Selenga), Khangai Mountains 🏞️",
+                mouth: "Kara Sea, Arctic Ocean 🌊",
+                emoji: "🥶"
+            },
+            {
+                name: "Yellow (Huang He)",
+                lengthKm: "5,464 km",
+                lengthMi: "3,395 mi",
+                continent: "Asia 🌏",
+                countries: "China 🇨🇳",
+                fact: "Known as the 'Cradle of Chinese Civilization', its yellow color comes from vast amounts of loess sediment. Has a history of devastating floods! 🌊💛",
+                source: "Bayan Har Mountains ⛰️",
+                mouth: "Bohai Sea 🌊",
+                emoji: "🌟"
+            },
+            {
+                name: "Ob–Irtysh",
+                lengthKm: "5,410 km",
+                lengthMi: "3,360 mi",
+                continent: "Asia 🌏",
+                countries: "Russia, Kazakhstan, China, Mongolia 🇷🇺🇰🇿🇨🇳",
+                fact: "A major river in western Siberia, known for its extensive wetlands and importance for fishing and hydroelectric power. 🐟🏭",
+                source: "Altai Mountains (Irtysh), Biya & Katun Rivers (Ob) 🏔️",
+                mouth: "Gulf of Ob, Arctic Ocean 🌊",
+                emoji: "🎣"
+            },
+            {
+                name: "Río de la Plata–Paraná–Grande",
+                lengthKm: "4,880 km",
+                lengthMi: "3,030 mi",
+                continent: "South America 🌎",
+                countries: "Brazil, Argentina, Paraguay, Bolivia, Uruguay 🇧🇷🇦🇷🇵🇾",
+                fact: "A massive estuary (Río de la Plata) fed by the Paraná River. Crucial for trade and agriculture in the region. Tango by the river! 💃🚢",
+                source: "Serra da Mantiqueira (Grande), Parnaíba (Paraná) 🏞️",
+                mouth: "Atlantic Ocean 🌊",
+                emoji: "🧉"
+            },
+            {
+                name: "Congo (Zaire)",
+                lengthKm: "4,700 km",
+                lengthMi: "2,920 mi",
+                continent: "Africa 🌍",
+                countries: "DR Congo, Congo, Angola, Tanzania, Zambia, Central African Republic, Cameroon 🇨🇩🇦🇴🇹🇿",
+                fact: "The deepest river in the world, with depths exceeding 220 meters! It's also the only major river to cross the equator twice. 🦍🐊",
+                source: "Chambeshi River, East African Rift 🏞️",
+                mouth: "Atlantic Ocean 🌊",
+                emoji: "🌳"
+            },
+            {
+                name: "Amur–Argun",
+                lengthKm: "4,444 km",
+                lengthMi: "2,761 mi",
+                continent: "Asia 🌏",
+                countries: "Russia, China, Mongolia 🇷🇺🇨🇳🇲🇳",
+                fact: "Forms a long stretch of the border between Russia and China. Home to unique wildlife like the Amur tiger and Amur leopard! 🐅🐾",
+                source: "Khingan Mountains (Argun), Shilka & Argun confluence (Amur) 🏔️",
+                mouth: "Tartar Strait, Pacific Ocean 🌊",
+                emoji: "🐅"
+            }
+        ];
+
+        const riverCardsContainer = document.getElementById('river-cards-container');
+        const riverModal = document.getElementById('riverModal');
+        const closeButton = document.querySelector('.close-button');
+
+        const modalRiverName = document.getElementById('modalRiverName');
+        const modalRiverLength = document.getElementById('modalRiverLength');
+        const modalRiverContinent = document.getElementById('modalRiverContinent');
+        const modalRiverCountries = document.getElementById('modalRiverCountries');
+        const modalRiverFact = document.getElementById('modalRiverFact');
+        const modalRiverSource = document.getElementById('modalRiverSource');
+        const modalRiverMouth = document.getElementById('modalRiverMouth');
+
+
+        // Function to create a river card
+        function createRiverCard(river, index) {
+            const card = document.createElement('div');
+            card.classList.add('river-card');
+            card.style.animationDelay = `${index * 0.1}s`; // Stagger animation
+            card.setAttribute('data-river-index', index);
+
+            card.innerHTML = `
+                <div class="rank">#${index + 1}</div>
+                <h2>${river.emoji} ${river.name}</h2>
+                <div class="details">
+                    <p><span class="emoji-icon">📏</span> <strong>Length:</strong> ${river.lengthKm}</p>
+                    <p><span class="emoji-icon">🗺️</span> <strong>Continent:</strong> ${river.continent}</p>
+                    <p><span class="emoji-icon">💡</span> <strong>Fact:</strong> ${river.fact.substring(0, 100)}... </p>
+                </div>
+            `;
+
+            card.addEventListener('click', () => openModal(river));
+            riverCardsContainer.appendChild(card);
+        }
+
+        // Function to open the modal
+        function openModal(river) {
+            modalRiverName.textContent = `${river.emoji} ${river.name}`;
+            modalRiverLength.textContent = `${river.lengthKm} (${river.lengthMi})`;
+            modalRiverContinent.textContent = river.continent;
+            modalRiverCountries.textContent = river.countries;
+            modalRiverFact.textContent = river.fact;
+            modalRiverSource.textContent = river.source;
+            modalRiverMouth.textContent = river.mouth;
+            riverModal.style.display = 'flex'; // Use flex to center
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            riverModal.style.display = 'none';
+        }
+
+        // Event listeners for closing modal
+        closeButton.addEventListener('click', closeModal);
+        window.addEventListener('click', (event) => {
+            if (event.target == riverModal) {
+                closeModal();
+            }
+        });
+
+        // Initialize cards on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            rivers.forEach((river, index) => createRiverCard(river, index));
+        });
+    </script>
+
+</body>
+</html>
